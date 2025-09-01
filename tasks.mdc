@@ -1,0 +1,45 @@
+## Cleanup tasks before deploy
+
+### Code ✅ COMPLETED
+- ✅ Moved unused component: `src/components/ui/github-button.tsx` → `archive/`
+- ✅ Moved unused API route: `src/app/api/github-stars/route.ts` → `archive/`
+- ✅ Moved unused chat tool: `src/app/api/chat/tools/getWeather.ts` → `archive/`
+
+### Assets: moved to archive ✅ COMPLETED
+- ✅ `public/landing-memojis-old.png` → `archive/`
+- ✅ `public/final_memojis_old.webm` → `archive/`
+- ✅ `public/final_memojis_ios_old.mp4` → `archive/`
+- ✅ `public/final_memojis.mp4` → `archive/`
+- ✅ `public/final_memojis.webm` → `archive/`
+- ✅ `public/avatar-landing.png` → `archive/`
+- ✅ `public/profil-mizuki-old.png` → `archive/`
+- ✅ `public/favicon.svg` → `archive/` (replaced by `logo-mizuki.svg`)
+- ✅ `public/x.svg` → `archive/`
+- ✅ `assets/readme-photo-old.png` → `archive/`
+- ✅ Scenic photos moved to `archive/`:
+  - `public/blancmont.JPG`
+  - `public/gueret.jpg`
+  - `public/marseille.JPG`
+  - `public/levens.JPG`
+  - `public/ploeuc.jpg`
+  - `public/podium.jpg`
+  - `public/transmo.JPG`
+
+### Assets: case fixes ✅ COMPLETED
+- ✅ Renamed files to lower-case to match references in `src/components/sport.tsx`:
+  - `public/mnt_fuji_1.JPG` → `public/mnt_fuji_1.jpg`
+  - `public/mnt_fuji_2.JPG` → `public/mnt_fuji_2.jpg`
+  - `public/hiking.JPG` → `public/hiking.jpg`
+  - `public/dj.JPG` → `public/dj.jpg`
+  - `public/bicycle.JPG` → `public/bicycle.jpg`
+  - `public/run.JPG` → `public/run.jpg`
+
+### Meta icons ⚠️ ATTENTION NEEDED
+- ⚠️ `apple-touch-icon.svg?v=2` is referenced in `src/app/layout.tsx` but missing from `public/`
+- **Fix needed**: Either create this file or update the reference to use `logo-mizuki.svg`
+- **Current reference**: `src/app/layout.tsx` line 62: `apple: "/apple-touch-icon.svg?v=2"`
+
+### Docs ⚠️ ATTENTION NEEDED
+- ⚠️ Update `README.md`: remove/mark optional the GitHub token requirement (stars feature removed)
+- **Current reference**: `README.md` line 51: `GITHUB_TOKEN=your_github_token_here`
+- **Current reference**: `README.md` line 64: GitHub Token generation instructions

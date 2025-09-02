@@ -43,3 +43,26 @@
 - ⚠️ Update `README.md`: remove/mark optional the GitHub token requirement (stars feature removed)
 - **Current reference**: `README.md` line 51: `GITHUB_TOKEN=your_github_token_here`
 - **Current reference**: `README.md` line 64: GitHub Token generation instructions
+
+## Portfolio Projects Cleanup Plan (for review)
+
+### Goal
+Replace template projects with only Mizuki's projects.
+
+### Scope
+- Update `src/components/projects/Data.tsx` to keep only owned projects.
+- Ensure chat tool `getProjects` renders the updated list.
+- Archive unused public images into `archive/`.
+
+### Checklist
+1. Reconcile AWS project title across `PROJECT_CONTENT` and `data` (card list)
+2. Remove non-owned entries from `PROJECT_CONTENT`
+3. Remove non-owned entries from exported `data` array
+4. Archive/delete unused images in `public/` for removed entries
+5. Verify chat tool `getProjects` still renders `AllProjects` correctly
+6. Optional: tweak `getProjects` tool message string
+7. Run lint/type checks
+8. Manual QA in chat: open Projects → open card → verify images/links
+
+### Notes
+- Card thumbnail uses `data[i].src` (7:10 portrait). Detail images use 16:9.

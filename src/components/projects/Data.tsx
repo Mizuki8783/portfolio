@@ -39,23 +39,63 @@ const PROJECT_CONTENT = [
     ],
   },
   {
-    title: 'Placeholder Project 1',
+    title: 'Self-Hosted Streaming Pipeline',
     description:
-      'Placeholder for testing the carousel scrolling behavior. Replace with a real project later.',
-    techStack: ['Next.js', 'TypeScript'],
-    date: '2025',
+      'Building a robust real-time data streaming pipeline using Docker containers for scalable data processing. This project will demonstrate containerized microservices architecture for handling high-throughput streaming data with fault tolerance and horizontal scaling capabilities.',
+    techStack: [
+      'Docker',
+      'Kafka',
+      'Python',
+      'Apache Spark',
+      'Redis',
+      'PostgreSQL',
+      'Prometheus',
+      'Grafana'
+    ],
+    date: 'Coming Soon',
+    isClickable: false,
     images: [
-      { src: '/aws-project_img1.png', alt: 'Placeholder image 1' },
+      { src: '/upcoming.png', alt: 'Self-hosted streaming pipeline architecture' },
     ],
   },
   {
-    title: 'Placeholder Project 2',
+    title: 'Self-Hosted RAG System',
     description:
-      'Second placeholder to ensure horizontal scroll works properly with multiple cards.',
-    techStack: ['React'],
-    date: '2025',
+      'Developing a complete Retrieval-Augmented Generation system with vector databases and LLM integration. This project will showcase building production-ready RAG pipelines with custom embeddings, semantic search, and context-aware response generation.',
+    techStack: [
+      'Python',
+      'LangChain',
+      'ChromaDB',
+      'OpenAI API',
+      'FastAPI',
+      'Docker',
+      'PostgreSQL',
+      'Vector Embeddings'
+    ],
+    date: 'Coming Soon',
+    isClickable: false,
     images: [
-      { src: '/aws-project_img1.png', alt: 'Placeholder image 2' },
+      { src: '/upcoming.png', alt: 'Self-hosted RAG system architecture' },
+    ],
+  },
+  {
+    title: 'Snowflake Data Pipeline with DBT',
+    description:
+      'Creating an enterprise-grade data transformation pipeline using Snowflake and DBT for modern data warehousing. This project will demonstrate advanced data modeling, testing, and documentation practices for scalable analytics infrastructure.',
+    techStack: [
+      'Snowflake',
+      'DBT',
+      'SQL',
+      'Python',
+      'Git',
+      'Data Lineage',
+      'Data Quality',
+      'Analytics Engineering'
+    ],
+    date: 'Coming Soon',
+    isClickable: false,
+    images: [
+      { src: '/upcoming.png', alt: 'Snowflake DBT pipeline architecture' },
     ],
   },
 ];
@@ -68,6 +108,7 @@ interface ProjectProps {
   date?: string;
   links?: { name: string; url: string }[];
   images?: { src: string; alt: string }[];
+  isClickable?: boolean;
 }
 
 const ProjectContent = ({ project }: { project: ProjectProps }) => {
@@ -168,17 +209,27 @@ export const data = [
     title: 'AWS Data Pipelines',
     src: '/aws-project_img2.png',
     content: <ProjectContent project={{ title: 'AWS Data Pipelines' }} />,
+    isClickable: true,
   },
   {
-    category: 'Placeholder',
-    title: 'Placeholder Project 1',
-    src: '/aws-project_img1.png',
-    content: <ProjectContent project={{ title: 'Placeholder Project 1' }} />,
+    category: 'Coming Soon',
+    title: 'Self-Hosted Streaming Pipeline',
+    src: '/upcoming.png',
+    content: <ProjectContent project={{ title: 'Self-Hosted Streaming Pipeline', isClickable: false }} />,
+    isClickable: false,
   },
   {
-    category: 'Placeholder',
-    title: 'Placeholder Project 2',
-    src: '/aws-project_img1.png',
-    content: <ProjectContent project={{ title: 'Placeholder Project 2' }} />,
+    category: 'Coming Soon',
+    title: 'Self-Hosted RAG System',
+    src: '/upcoming.png',
+    content: <ProjectContent project={{ title: 'Self-Hosted RAG System', isClickable: false }} />,
+    isClickable: false,
+  },
+  {
+    category: 'Coming Soon',
+    title: 'Snowflake Data Pipeline with DBT',
+    src: '/upcoming.png',
+    content: <ProjectContent project={{ title: 'Snowflake Data Pipeline with DBT', isClickable: false }} />,
+    isClickable: false,
   },
 ];

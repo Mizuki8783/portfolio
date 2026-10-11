@@ -1,38 +1,14 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
+import { about, contact, identity, techHighlights } from '@/data/profile';
 import { motion } from 'framer-motion';
 import { Code2, Github, Linkedin, Mail } from 'lucide-react';
 
-const EMAIL = 'nmizuki648@gmail.com';
-
 const links = [
-  { label: EMAIL, href: `mailto:${EMAIL}`, icon: Mail },
-  {
-    label: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/mizukinakano/',
-    icon: Linkedin,
-  },
-  {
-    label: 'GitHub',
-    href: 'https://github.com/Mizuki8783?tab=repositories',
-    icon: Github,
-  },
-];
-
-const techStack = [
-  'Python',
-  'SQL',
-  'dbt',
-  'Airflow',
-  'PySpark',
-  'Snowflake',
-  'Databricks',
-  'AWS',
-  'GCP',
-  'RAG',
-  'AI Agents',
-  'LLMs (OpenAI, Anthropic, Google)',
+  { label: contact.email, href: `mailto:${contact.email}`, icon: Mail },
+  { label: 'LinkedIn', href: contact.linkedin, icon: Linkedin },
+  { label: 'GitHub', href: `${contact.github}?tab=repositories`, icon: Github },
 ];
 
 export function Contact() {
@@ -47,16 +23,16 @@ export function Contact() {
         <div className="flex items-center gap-4">
           <div className="bg-muted h-16 w-16 overflow-hidden rounded-full shadow-md">
             <img
-              src="/avatar-mizuki.jpg"
-              alt="Mizuki's avatar"
+              src={identity.avatar}
+              alt={`${identity.firstName}'s avatar`}
               className="h-full w-full object-cover"
             />
           </div>
           <div>
             <h2 className="text-foreground text-2xl font-semibold">
-              Mizuki Nakano
+              {identity.name}
             </h2>
-            <p className="text-muted-foreground text-sm">Data Engineer</p>
+            <p className="text-muted-foreground text-sm">{identity.title}</p>
           </div>
         </div>
 
@@ -73,12 +49,7 @@ export function Contact() {
 
       <div>
         <p className="text-foreground mb-2 text-lg font-semibold">TL;DR</p>
-        <p className="text-foreground text-sm">
-          I&apos;m a Data Engineer in Vancouver, BC who grew up in Japan and
-          studied in the US. I spent 3+ years in Tokyo building data platforms
-          at Accenture and Panalyt, and now I&apos;m focused on where data
-          engineering meets AI.
-        </p>
+        <p className="text-foreground text-sm">{about.tldr}</p>
       </div>
 
       <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
@@ -101,7 +72,7 @@ export function Contact() {
         <div className="w-full">
           <p className="text-foreground mb-2 text-sm font-medium">Tech stack</p>
           <div className="flex flex-wrap gap-2">
-            {techStack.map((skill) => (
+            {techHighlights.map((skill) => (
               <Badge key={skill} className="border px-3 py-1.5 font-normal">
                 {skill}
               </Badge>
@@ -114,15 +85,8 @@ export function Contact() {
         <p className="text-foreground mb-2 text-lg font-semibold">
           What I bring
         </p>
-        <p className="text-foreground text-sm">
-          3+ years building data platforms end to end, as a Data Architect at
-          Accenture, a Data Engineer at Panalyt, and a freelance analyst for
-          Booklista. I&apos;ve built PySpark data marts on AWS EKS, Airflow-driven
-          ETL into BigQuery, and kept 20+ DAGs across 50+ sources running
-          reliably. <br /> I bring solid data modeling and governance (data
-          catalogs, lineage, quality checks), CI/CD and Terraform habits, and
-          the ability to turn business requirements into technical specs and
-          lead engineers through delivery.
+        <p className="text-foreground text-sm whitespace-pre-line">
+          {about.whatIBring}
         </p>
       </div>
 
@@ -130,17 +94,14 @@ export function Contact() {
         <p className="text-foreground mb-2 text-lg font-semibold">
           Passion & Interests
         </p>
-        <p className="text-foreground text-sm">
-          I&apos;m hooked on AI: building RAG systems, AI agents, and intelligent
-          data pipelines on top of solid data foundations. <br /> Away from the
-          keyboard, I&apos;m training in martial arts, especially Muay Thai, or
-          outdoors hiking, cycling, and running.
+        <p className="text-foreground text-sm whitespace-pre-line">
+          {about.passion}
         </p>
       </div>
 
       <div className="mt-10 flex justify-center">
         <a
-          href={`mailto:${EMAIL}`}
+          href={`mailto:${contact.email}`}
           className="cursor-pointer rounded-full bg-black px-6 py-3 font-semibold text-white transition-colors duration-300 hover:bg-zinc-800"
         >
           Contact me

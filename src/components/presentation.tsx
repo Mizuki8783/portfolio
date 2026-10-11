@@ -1,19 +1,18 @@
 'use client';
 
 import { motion, type Variants } from 'framer-motion';
+import { about, getAge, identity } from '@/data/profile';
 import Image from 'next/image';
 import React from 'react';
 
 export function Presentation() {
   // Personal information
   const profile = {
-    name: 'Mizuki Nakano',
-    age: '28 years old',
-    location: 'Vancouver, BC',
-    // Add a newline character after the emoji
-    description:
-      "Hey 👋\nI'm Mizuki, a Data Engineer based in Vancouver, BC with experience in data engineering and analytics. I've worked at Accenture as a Data Architect and Panalyt as a Junior Data Engineer, building scalable data solutions and ETL pipelines. I'm passionate about leveraging data and innovative technology to drive business value.",
-    src: '/profil-mizuki.png',
+    name: identity.name,
+    age: `${getAge()} years old`,
+    location: identity.location,
+    description: about.intro,
+    src: identity.photo,
     fallbackSrc:
       'https://images.unsplash.com/photo-1610216705422-caa3fcb6d158?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3',
   };
@@ -103,7 +102,7 @@ export function Presentation() {
             transition={{ delay: 0.6, duration: 0.5 }}
             className="mt-4 flex flex-wrap gap-2"
           >
-            {['Data Engineer/Analytics', 'Data Architecture', 'ETL', 'Data Governance', 'AI/ML'].map(
+            {about.focusAreas.map(
               (tag) => (
                 <span
                   key={tag}

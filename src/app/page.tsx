@@ -3,6 +3,7 @@
 import FluidCursor from '@/components/FluidCursor';
 import { Button } from '@/components/ui/button';
 import WelcomeModal from '@/components/welcome-modal';
+import { contact, identity } from '@/data/profile';
 import { motion, type Variants } from 'framer-motion';
 import {
   ArrowRight,
@@ -74,14 +75,14 @@ export default function Home() {
           className="hidden bg-gradient-to-b from-neutral-500/10 to-neutral-500/0 bg-clip-text text-[10rem] leading-none font-black text-transparent select-none sm:block lg:text-[16rem]"
           style={{ marginBottom: '-2.5rem' }}
         >
-                      Mizuki Nakano
+                      {identity.name}
         </div>
       </div>
 
       {/* GitHub link */}
       <div className="absolute top-6 right-8 z-20">
         <a
-          href="https://github.com/Mizuki8783"
+          href={contact.github}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Open GitHub profile"
@@ -101,7 +102,7 @@ export default function Home() {
 
       <div className="absolute top-6 left-6 z-20">
         <button
-          onClick={() => goToSection('getJob')}
+          onClick={() => goToSection('getContact')}
           className="relative flex cursor-pointer items-center gap-2 rounded-full border bg-white/30 px-4 py-1.5 text-sm font-medium text-black shadow-md backdrop-blur-lg transition hover:bg-white/60 dark:border-white dark:text-white dark:hover:bg-neutral-800"
         >
           {/* Green pulse dot */}
@@ -125,7 +126,7 @@ export default function Home() {
         </div>
 
         <h2 className="text-secondary-foreground mt-1 text-xl font-semibold md:text-2xl">
-          Hey, I'm Mizuki 👋
+          Hey, I&apos;m {identity.firstName} 👋
         </h2>
         <h1 className="text-4xl font-bold sm:text-5xl md:text-6xl lg:text-7xl">
           My Portfolio

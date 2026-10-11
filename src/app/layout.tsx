@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { contact, identity } from "@/data/profile";
 import "./globals.css";
 
 // Load Inter font for non-Apple devices
@@ -13,10 +14,10 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Mizuki Nakano Portfolio",
+  title: `${identity.name} Portfolio`,
   description: "Interactive portfolio with an AI-powered interface that answers questions about me, my data engineering skills, and my experience",
   keywords: [
-    "Mizuki Nakano",
+    identity.name,
     "Portfolio",
     "Data Engineer",
     "AI",
@@ -32,24 +33,24 @@ export const metadata: Metadata = {
   ],
   authors: [
     {
-      name: "Mizuki Nakano",
-      url: "https://mizukinakano.dev",
+      name: identity.name,
+      url: identity.website,
     },
   ],
-  creator: "Mizuki Nakano",
+  creator: identity.name,
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://mizukinakano.dev",
-    title: "Mizuki Nakano Portfolio",
+    url: identity.website,
+    title: `${identity.name} Portfolio`,
     description: "Interactive portfolio with an AI-powered interface that answers questions about me",
-    siteName: "Mizuki Nakano Portfolio",
+    siteName: `${identity.name} Portfolio`,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Mizuki Nakano Portfolio",
+    title: `${identity.name} Portfolio`,
     description: "Interactive portfolio with an AI-powered interface that answers questions about me",
-    creator: "@Mizuki8783",
+    creator: `@${contact.githubHandle}`,
   },
   icons: {
     icon: [

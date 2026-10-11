@@ -1,5 +1,6 @@
 import { tool } from 'ai';
 import { z } from 'zod';
+import { about } from '@/data/profile';
 
 export const getPresentation = tool({
   description:
@@ -7,8 +8,7 @@ export const getPresentation = tool({
   parameters: z.object({}),
   execute: async () => {
     return {
-      presentation:
-        "I'm Mizuki Nakano, a Data Engineer based in Vancouver, BC with experience in data architecture and analytics. I've worked at Accenture as a Data Architect and Panalyt as a Junior Data Engineer, building scalable data solutions and ETL pipelines. I'm passionate about data engineering and innovative AI/ML solutions that drive business value",
+      presentation: about.intro,
     };
   },
 });

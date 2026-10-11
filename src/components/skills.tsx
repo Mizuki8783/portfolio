@@ -3,88 +3,27 @@
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion, type Variants } from 'framer-motion';
-import { Code, Cpu, Database, Cloud, Brain, Users } from 'lucide-react';
+import { skills } from '@/data/profile';
+import {
+  Brain,
+  Cloud,
+  Code,
+  Cpu,
+  Database,
+  Users,
+  type LucideIcon,
+} from 'lucide-react';
+
+const categoryIcons: Record<string, LucideIcon> = {
+  'Programming Languages': Code,
+  'Backend & Systems': Cpu,
+  'Data Engineering & Analytics Tools': Database,
+  'Data & Cloud Platforms': Cloud,
+  'Soft Skills': Users,
+  'AI & LLM': Brain,
+};
 
 const Skills = () => {
-  const skillsData = [
-    {
-      category: 'Programming Languages',
-      icon: <Code className="h-5 w-5" />,
-      skills: [
-        'Python',
-        'SQL',
-      ],
-      color: 'bg-blue-50 text-blue-600 border border-blue-200',
-    },
-    {
-      category: 'Backend & Systems',
-      icon: <Cpu className="h-5 w-5" />,
-      skills: [
-        'PostgreSQL',
-        'Git',
-        'GitHub',
-        'Docker',
-        'Terraform',
-      ],
-      color: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
-    },
-    {
-      category: 'Data Engineering & Analytics Tools',
-      icon: <Database className="h-5 w-5" />,
-      skills: [
-        'Pandas',
-        'PySpark',
-        'Snowpark',
-        'Airflow',
-        'dbt',
-        'Great Expectations',
-        'Metabase',
-      ],
-      color: 'bg-indigo-50 text-indigo-600 border border-indigo-200',
-    },
-    {
-      category: 'Data & Cloud Platforms',
-      icon: <Cloud className="h-5 w-5" />,
-      skills: [
-        'AWS',
-        'GCP',
-        'Snowflake',
-        'Databricks',
-        'BigQuery',
-      ],
-      color: 'bg-amber-50 text-amber-600 border border-amber-200',
-    },
-    {
-      category: 'Soft Skills',
-      icon: <Users className="h-5 w-5" />,
-      skills: [
-        'Data Governance',
-        'Data Modeling',
-        'Data Warehousing',
-        'ETL',
-        'Problem-Solving',
-        'Clear Communication',
-        'Leadership',
-        'Adaptability',
-      ],
-      color: 'bg-purple-50 text-purple-600 border border-purple-200',
-    },
-    {
-      category: 'AI & LLM',
-      icon: <Brain className="h-5 w-5" />,
-      skills: [
-        'LLM Providers (OpenAI, Anthropic, Google)',
-        'AI Agent',
-        'Prompt Engineering',
-        'Vector Database',
-        'RAG',
-        'Supabase',
-        'Cursor',
-      ],
-      color: 'bg-pink-50 text-pink-600 border border-pink-200',
-    },
-  ];
-
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -135,42 +74,45 @@ const Skills = () => {
             initial="hidden"
             animate="visible"
           >
-            {skillsData.map((section, index) => (
-              <motion.div
-                key={index}
-                className="space-y-3 px-0"
-                variants={itemVariants}
-              >
-                <div className="flex items-center gap-2">
-                  {section.icon}
-                  <h3 className="text-accent-foreground text-lg font-semibold">
-                    {section.category}
-                  </h3>
-                </div>
-
+            {skills.map((section) => {
+              const Icon = categoryIcons[section.category] ?? Code;
+              return (
                 <motion.div
-                  className="flex flex-wrap gap-2"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
+                  key={section.category}
+                  className="space-y-3 px-0"
+                  variants={itemVariants}
                 >
-                  {section.skills.map((skill, idx) => (
-                    <motion.div
-                      key={idx}
-                      variants={badgeVariants}
-                      whileHover={{
-                        scale: 1.04,
-                        transition: { duration: 0.2 },
-                      }}
-                    >
-                      <Badge className={`border px-3 py-1.5 font-normal`}>
-                        {skill}
-                      </Badge>
-                    </motion.div>
-                  ))}
+                  <div className="flex items-center gap-2">
+                    <Icon className="h-5 w-5" />
+                    <h3 className="text-accent-foreground text-lg font-semibold">
+                      {section.category}
+                    </h3>
+                  </div>
+
+                  <motion.div
+                    className="flex flex-wrap gap-2"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {section.items.map((skill, idx) => (
+                      <motion.div
+                        key={idx}
+                        variants={badgeVariants}
+                        whileHover={{
+                          scale: 1.04,
+                          transition: { duration: 0.2 },
+                        }}
+                      >
+                        <Badge className={`border px-3 py-1.5 font-normal`}>
+                          {skill}
+                        </Badge>
+                      </motion.div>
+                    ))}
+                  </motion.div>
                 </motion.div>
-              </motion.div>
-            ))}
+              );
+            })}
           </motion.div>
         </CardContent>
       </Card>

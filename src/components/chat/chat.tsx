@@ -17,6 +17,7 @@ import {
   ChatBubbleMessage,
 } from '@/components/ui/chat/chat-bubble';
 import WelcomeModal from '@/components/welcome-modal';
+import { contact } from '@/data/profile';
 import { Info } from 'lucide-react';
 import HelperBoost from './HelperBoost';
 
@@ -118,7 +119,6 @@ const SECTION_TOOLS = [
   'getSkills',
   'getSports',
   'getContact',
-  'getJob',
 ];
 
 const Chat = () => {
@@ -321,7 +321,7 @@ const Chat = () => {
         />
         <div className="">
           <a
-            href="https://github.com/Mizuki8783"
+            href={contact.github}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Open GitHub profile"
@@ -443,12 +443,12 @@ const Chat = () => {
           </div>
         </div>
         <a
-                          href="https://github.com/Mizuki8783"
+                          href={contact.github}
           target="_blank"
           rel="noopener noreferrer"
           className="fixed right-3 bottom-0 z-10 mb-4 hidden cursor-pointer items-center gap-2 rounded-xl px-4 py-2 text-sm hover:underline md:block"
         >
-                          @Mizuki8783
+                          @{contact.githubHandle}
         </a>
       </div>
     </div>

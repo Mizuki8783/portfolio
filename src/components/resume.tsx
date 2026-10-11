@@ -3,18 +3,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDownToLine, Download, Eye, File } from 'lucide-react';
+import { identity, resume } from '@/data/profile';
 import Image from 'next/image';
 
 export function Resume() {
   // Resume details
   const resumeDetails = {
-    title: "Mizuki's Resume",
-    description: 'Data Engineer',
+    title: `${identity.firstName}'s Resume`,
+    description: identity.title,
     fileType: 'PDF',
-    lastUpdated: 'March 2025',
-    fileSize: '0.5 MB',
-    previewImageSrc: '/resume_mizuki_preview.png',
-    downloadUrl: '/resume_mizuki.pdf',
+    lastUpdated: resume.lastUpdated,
+    fileSize: resume.fileSize,
+    previewImageSrc: resume.preview,
+    downloadUrl: resume.file,
   };
 
   const handleDownload = () => {

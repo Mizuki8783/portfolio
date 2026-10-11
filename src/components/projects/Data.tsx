@@ -81,21 +81,29 @@ const PROJECT_CONTENT = [
   {
     title: 'Snowflake Data Pipeline with DBT',
     description:
-      'Creating an enterprise-grade data transformation pipeline using Snowflake and DBT for modern data warehousing. This project will demonstrate advanced data modeling, testing, and documentation practices for scalable analytics infrastructure.',
+      'dbt project that turns raw Airbnb listings, bookings and hosts data in Snowflake into an analytics-ready warehouse using a medallion (bronze → silver → gold) architecture. Incremental bronze and silver models clean and enrich the data, the gold layer builds a Jinja-generated one big table and fact table, and SCD Type 2 snapshots track dimension history.',
     techStack: [
       'Snowflake',
-      'DBT',
+      'dbt Core',
       'SQL',
+      'Jinja',
       'Python',
-      'Git',
-      'Data Lineage',
-      'Data Quality',
-      'Analytics Engineering'
+      'uv',
+      'Medallion Architecture',
+      'SCD Type 2'
     ],
-    date: 'Coming Soon',
-    isClickable: false,
+    date: '2026',
+    links: [
+      {
+        name: 'GitHub',
+        url: 'https://github.com/Mizuki8783/airbnb-warehouse-pipeline',
+      },
+    ],
     images: [
-      { src: '/upcoming.png', alt: 'Snowflake DBT pipeline architecture' },
+      {
+        src: '/snowflake-dbt_img1.png',
+        alt: 'Snowflake dbt medallion pipeline architecture',
+      },
     ],
   },
 ];
@@ -212,6 +220,13 @@ export const data = [
     isClickable: true,
   },
   {
+    category: 'Data Engineering',
+    title: 'Snowflake Data Pipeline with DBT',
+    src: '/snowflake-dbt_img2.png',
+    content: <ProjectContent project={{ title: 'Snowflake Data Pipeline with DBT' }} />,
+    isClickable: true,
+  },
+  {
     category: 'Coming Soon',
     title: 'Self-Hosted Streaming Pipeline',
     src: '/upcoming.png',
@@ -223,13 +238,6 @@ export const data = [
     title: 'Self-Hosted RAG System',
     src: '/upcoming.png',
     content: <ProjectContent project={{ title: 'Self-Hosted RAG System', isClickable: false }} />,
-    isClickable: false,
-  },
-  {
-    category: 'Coming Soon',
-    title: 'Snowflake Data Pipeline with DBT',
-    src: '/upcoming.png',
-    content: <ProjectContent project={{ title: 'Snowflake Data Pipeline with DBT', isClickable: false }} />,
     isClickable: false,
   },
 ];

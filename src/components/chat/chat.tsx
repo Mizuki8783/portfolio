@@ -1,5 +1,6 @@
 'use client';
 import { useChat } from '@ai-sdk/react';
+import { generateId } from 'ai';
 import { AnimatePresence, motion, type MotionProps } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
@@ -111,10 +112,20 @@ const MOTION_CONFIG: MotionProps = {
   },
 };
 
+const SECTION_TOOLS = [
+  'getPresentation',
+  'getProjects',
+  'getSkills',
+  'getSports',
+  'getContact',
+  'getJob',
+];
+
 const Chat = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('query');
+  const initialTool = searchParams.get('tool');
   const [autoSubmitted, setAutoSubmitted] = useState(false);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [isTalking, setIsTalking] = useState(false);
@@ -217,6 +228,32 @@ const Chat = () => {
     });
   };
 
+  // Renders a section as a completed tool call without hitting the LLM, so follow-up questions keep it as context.
+  const showSection = (toolName: string) => {
+    if (isLoading) return;
+    setMessages([
+      ...messages,
+      {
+        id: generateId(),
+        role: 'assistant',
+        content: '',
+        parts: [
+          {
+            type: 'tool-invocation',
+            toolInvocation: {
+              state: 'result',
+              step: 0,
+              toolCallId: generateId(),
+              toolName,
+              args: {},
+              result: 'Displayed to the user.',
+            },
+          },
+        ],
+      },
+    ]);
+  };
+
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.loop = true;
@@ -225,12 +262,16 @@ const Chat = () => {
       videoRef.current.pause();
     }
 
-    if (initialQuery && !autoSubmitted) {
+    if (autoSubmitted) return;
+    if (initialTool && SECTION_TOOLS.includes(initialTool)) {
+      setAutoSubmitted(true);
+      showSection(initialTool);
+    } else if (initialQuery) {
       setAutoSubmitted(true);
       setInput('');
       submitQuery(initialQuery);
     }
-  }, [initialQuery, autoSubmitted]);
+  }, [initialQuery, initialTool, autoSubmitted]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -386,7 +427,11 @@ const Chat = () => {
         {/* Fixed Bottom Bar */}
         <div className="sticky bottom-0 bg-white px-2 pt-3 md:px-0 md:pb-4">
           <div className="relative flex flex-col items-center gap-3">
-            <HelperBoost submitQuery={submitQuery} setInput={setInput} />
+            <HelperBoost
+              submitQuery={submitQuery}
+              showSection={showSection}
+              setInput={setInput}
+            />
             <ChatBottombar
               input={input}
               handleInputChange={handleInputChange}

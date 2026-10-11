@@ -30,24 +30,16 @@ import { Drawer } from 'vaul';
 
 interface HelperBoostProps {
   submitQuery?: (query: string) => void;
+  showSection?: (toolName: string) => void;
   setInput?: (value: string) => void;
 }
 
-const questions = {
-  Me: 'Who are you? I want to know more about you.',
-  Projects: 'What are your projects? What are you working on right now?',
-  Skills: 'What are your skills? Give me a list of your soft and hard skills.',
-  Fun: 'What are your hobbies and interests? Tell me about your activities outside of work.',
-  Contact:
-    'How can I reach you? What kind of project would make you say "yes" immediately?',
-};
-
 const questionConfig = [
-  { key: 'Me', color: '#329696', icon: Laugh },
-  { key: 'Projects', color: '#3E9858', icon: BriefcaseBusiness },
-  { key: 'Skills', color: '#856ED9', icon: Layers },
-  { key: 'Fun', color: '#B95F9D', icon: PartyPopper },
-  { key: 'Contact', color: '#C19433', icon: UserRoundSearch },
+  { key: 'Me', tool: 'getPresentation', color: '#329696', icon: Laugh },
+  { key: 'Projects', tool: 'getProjects', color: '#3E9858', icon: BriefcaseBusiness },
+  { key: 'Skills', tool: 'getSkills', color: '#856ED9', icon: Layers },
+  { key: 'Fun', tool: 'getSports', color: '#B95F9D', icon: PartyPopper },
+  { key: 'Contact', tool: 'getContact', color: '#C19433', icon: UserRoundSearch },
 ];
 
 // Helper drawer data
@@ -144,16 +136,11 @@ const AnimatedChevron = () => {
 
 export default function HelperBoost({
   submitQuery,
+  showSection,
   setInput,
 }: HelperBoostProps) {
   const [isVisible, setIsVisible] = useState(true);
   const [open, setOpen] = useState(false);
-
-  const handleQuestionClick = (questionKey: string) => {
-    if (submitQuery) {
-      submitQuery(questions[questionKey as keyof typeof questions]);
-    }
-  };
 
   const handleDrawerQuestionClick = (question: string) => {
     if (submitQuery) {
@@ -203,10 +190,10 @@ export default function HelperBoost({
                 className="flex w-full flex-wrap gap-1 md:gap-3"
                 style={{ justifyContent: 'safe center' }}
               >
-                {questionConfig.map(({ key, color, icon: Icon }) => (
+                {questionConfig.map(({ key, tool, color, icon: Icon }) => (
                   <Button
                     key={key}
-                    onClick={() => handleQuestionClick(key)}
+                    onClick={() => showSection?.(tool)}
                     variant="outline"
                     className="border-border hover:bg-border/30 h-auto min-w-[100px] flex-shrink-0 cursor-pointer rounded-xl border bg-white/80 px-4 py-3 shadow-none backdrop-blur-sm transition-none active:scale-95"
                   >

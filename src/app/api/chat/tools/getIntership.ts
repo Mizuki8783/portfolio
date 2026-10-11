@@ -17,7 +17,7 @@ export const getJob = tool({
 - 🔥 I move fast, learn faster, and I’m HUNGRYYYYY for big challenges
 
 📬 **Contact me** via:
-- Email: mizukif1187@gmail.com
+- Email: nmizuki648@gmail.com
 - LinkedIn: https://www.linkedin.com/in/mizukinakano/
 - GitHub: https://github.com/Mizuki8783?tab=repositories
 

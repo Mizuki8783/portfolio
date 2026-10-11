@@ -16,21 +16,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
-/* ---------- quick-question data ---------- */
-const questions = {
-  Me: 'Who are you? I want to know more about you.',
-  Projects: 'What are your projects? What are you working on right now?',
-  Skills: 'What are your skills? Give me a list of your soft and hard skills.',
-  Fun: 'What are your hobbies and interests? Tell me about your activities outside of work.',
-  Contact: 'How can I contact you?',
-} as const;
-
+/* ---------- quick-section data ---------- */
 const questionConfig = [
-  { key: 'Me', color: '#329696', icon: Laugh },
-  { key: 'Projects', color: '#3E9858', icon: BriefcaseBusiness },
-  { key: 'Skills', color: '#856ED9', icon: Layers },
-  { key: 'Fun', color: '#B95F9D', icon: PartyPopper },
-  { key: 'Contact', color: '#C19433', icon: UserRoundSearch },
+  { key: 'Me', tool: 'getPresentation', color: '#329696', icon: Laugh },
+  { key: 'Projects', tool: 'getProjects', color: '#3E9858', icon: BriefcaseBusiness },
+  { key: 'Skills', tool: 'getSkills', color: '#856ED9', icon: Layers },
+  { key: 'Fun', tool: 'getSports', color: '#B95F9D', icon: PartyPopper },
+  { key: 'Contact', tool: 'getContact', color: '#C19433', icon: UserRoundSearch },
 ] as const;
 
 /* ---------- component ---------- */
@@ -41,6 +33,7 @@ export default function Home() {
 
   const goToChat = (query: string) =>
     router.push(`/chat?query=${encodeURIComponent(query)}`);
+  const goToSection = (tool: string) => router.push(`/chat?tool=${tool}`);
 
   /* hero animations (unchanged) */
   const topElementVariants: Variants = {
@@ -108,7 +101,7 @@ export default function Home() {
 
       <div className="absolute top-6 left-6 z-20">
         <button
-          onClick={() => goToChat('Are you looking for an internship?')}
+          onClick={() => goToSection('getJob')}
           className="relative flex cursor-pointer items-center gap-2 rounded-full border bg-white/30 px-4 py-1.5 text-sm font-medium text-black shadow-md backdrop-blur-lg transition hover:bg-white/60 dark:border-white dark:text-white dark:hover:bg-neutral-800"
         >
           {/* Green pulse dot */}
@@ -188,10 +181,10 @@ export default function Home() {
 
         {/* quick-question grid */}
         <div className="mt-4 grid w-full max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3 md:grid-cols-5">
-          {questionConfig.map(({ key, color, icon: Icon }) => (
+          {questionConfig.map(({ key, tool, color, icon: Icon }) => (
             <Button
               key={key}
-              onClick={() => goToChat(questions[key])}
+              onClick={() => goToSection(tool)}
               variant="outline"
               className="border-border hover:bg-border/30 aspect-square w-full cursor-pointer rounded-2xl border bg-white/30 py-8 shadow-none backdrop-blur-lg active:scale-95 md:p-10"
             >

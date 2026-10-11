@@ -11,8 +11,8 @@ const chatBubbleVariant = cva(
   {
     variants: {
       variant: {
-        received: "self-start w-full",
-        sent: "self-center flex-row-reverse mx-auto",
+        received: "self-start max-w-[80%]",
+        sent: "self-end flex-row-reverse ml-auto max-w-[80%]",
       },
       layout: {
         default: "",
@@ -86,7 +86,7 @@ const chatBubbleMessageVariants = cva("", {
   variants: {
     variant: {
       received:
-        "text-secondary-foreground rounded-lg py-2",
+        "py-2 px-5 bg-[#E9E9EB] text-black rounded-3xl dark:bg-[#3B3B3D] dark:text-white",
       sent: "p-2 px-5 bg-[#007AFF] text-primary-foreground rounded-3xl",
     },
     layout: {

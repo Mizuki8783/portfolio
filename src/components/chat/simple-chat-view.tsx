@@ -75,8 +75,8 @@ export function SimplifiedChatView({
         {/* Text content */}
         {hasTextContent && (
           <div className="w-full">
-            <ChatBubble variant="received" className="w-full">
-              <ChatBubbleMessage className="w-full">
+            <ChatBubble variant="received">
+              <ChatBubbleMessage>
                 <ChatMessageContent
                   message={message}
                   isLast={true}

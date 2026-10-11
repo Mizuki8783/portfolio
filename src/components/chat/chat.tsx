@@ -176,36 +176,28 @@ const Chat = () => {
     },
   });
 
-  const { currentAIMessage, latestUserMessage, hasActiveTool } = useMemo(() => {
-    const latestAIMessageIndex = messages.findLastIndex(
-      (m) => m.role === 'assistant'
-    );
-    const latestUserMessageIndex = messages.findLastIndex(
-      (m) => m.role === 'user'
-    );
-
-    const result = {
-      currentAIMessage:
-        latestAIMessageIndex !== -1 ? messages[latestAIMessageIndex] : null,
-      latestUserMessage:
-        latestUserMessageIndex !== -1 ? messages[latestUserMessageIndex] : null,
-      hasActiveTool: false,
-    };
-
-    if (result.currentAIMessage) {
-      result.hasActiveTool =
-        result.currentAIMessage.parts?.some(
+  const hasActiveTool = useMemo(
+    () =>
+      messages
+        .findLast((m) => m.role === 'assistant')
+        ?.parts?.some(
           (part) =>
             part.type === 'tool-invocation' &&
             part.toolInvocation?.state === 'result'
-        ) || false;
-    }
+        ) ?? false,
+    [messages]
+  );
 
-    if (latestAIMessageIndex < latestUserMessageIndex) {
-      result.currentAIMessage = null;
-    }
+  // Scroll to the newest turn, keeping the user's question in view while its reply streams below.
+  const scrollAnchorRef = useRef<HTMLDivElement | null>(null);
+  const anchorIndex =
+    messages.length -
+    (messages.at(-1)?.role === 'assistant' && messages.at(-2)?.role === 'user'
+      ? 2
+      : 1);
 
-    return result;
+  useEffect(() => {
+    scrollAnchorRef.current?.scrollIntoView({ block: 'start' });
   }, [messages]);
 
   const isToolInProgress = messages.some(
@@ -228,11 +220,10 @@ const Chat = () => {
     });
   };
 
-  // Renders a section as a completed tool call without hitting the LLM, so follow-up questions keep it as context.
+  // Starts a new thread with the section as a completed tool call, without hitting the LLM, so follow-ups keep it as context.
   const showSection = (toolName: string) => {
     if (isLoading) return;
     setMessages([
-      ...messages,
       {
         id: generateId(),
         role: 'assistant',
@@ -303,8 +294,7 @@ const Chat = () => {
   };
 
   // Check if this is the initial empty state (no messages)
-  const isEmptyState =
-    !currentAIMessage && !latestUserMessage && !loadingSubmit;
+  const isEmptyState = messages.length === 0 && !loadingSubmit;
 
   // Calculate header height based on hasActiveTool
   const headerHeight = hasActiveTool ? 100 : 180;
@@ -360,26 +350,6 @@ const Chat = () => {
               />
             </ClientOnly>
           </div>
-
-          <AnimatePresence>
-            {latestUserMessage && !currentAIMessage && (
-              <motion.div
-                {...MOTION_CONFIG}
-                className="mx-auto flex max-w-3xl px-4"
-              >
-                <ChatBubble variant="sent">
-                  <ChatBubbleMessage>
-                    <ChatMessageContent
-                      message={latestUserMessage}
-                      isLast={true}
-                      isLoading={false}
-                      reload={() => Promise.resolve(null)}
-                    />
-                  </ChatBubbleMessage>
-                </ChatBubble>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
 
@@ -399,27 +369,45 @@ const Chat = () => {
               >
                 <ChatLanding submitQuery={submitQuery} />
               </motion.div>
-            ) : currentAIMessage ? (
-              <div className="pb-4">
-                <SimplifiedChatView
-                  message={currentAIMessage}
-                  isLoading={isLoading}
-                  reload={reload}
-                  addToolResult={addToolResult}
-                />
-              </div>
             ) : (
-              loadingSubmit && (
-                <motion.div
-                  key="loading"
-                  {...MOTION_CONFIG}
-                  className="px-4 pt-18"
-                >
-                  <ChatBubble variant="received">
-                    <ChatBubbleMessage isLoading />
-                  </ChatBubble>
-                </motion.div>
-              )
+              <div key="thread" className="pb-4">
+                {messages.map((message, index) => (
+                  <div
+                    key={message.id}
+                    ref={index === anchorIndex ? scrollAnchorRef : undefined}
+                    style={{ scrollMarginTop: headerHeight }}
+                  >
+                    {message.role === 'user' ? (
+                      <motion.div {...MOTION_CONFIG} className="flex px-4 pb-6">
+                        <ChatBubble variant="sent">
+                          <ChatBubbleMessage>
+                            <ChatMessageContent
+                              message={message}
+                              isLast={true}
+                              isLoading={false}
+                              reload={() => Promise.resolve(null)}
+                            />
+                          </ChatBubbleMessage>
+                        </ChatBubble>
+                      </motion.div>
+                    ) : (
+                      <SimplifiedChatView
+                        message={message}
+                        isLoading={isLoading && index === messages.length - 1}
+                        reload={reload}
+                        addToolResult={addToolResult}
+                      />
+                    )}
+                  </div>
+                ))}
+                {loadingSubmit && (
+                  <motion.div {...MOTION_CONFIG} className="px-4">
+                    <ChatBubble variant="received">
+                      <ChatBubbleMessage isLoading />
+                    </ChatBubble>
+                  </motion.div>
+                )}
+              </div>
             )}
           </AnimatePresence>
         </div>
